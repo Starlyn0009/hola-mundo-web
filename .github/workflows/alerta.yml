@@ -1,0 +1,29 @@
+name: CI Web + Notificacion
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Ejecutar Hola Mundo JS
+        run: node app.js
+
+      - name: Enviar notificacion a ntfy
+        run: |
+          curl -H "Title: Actualizacion Web" \
+               -H "Priority: 5" \
+               -d "Se actualizo la pagina Hola Mundo en GitHub Pages 🌍" \
+               https://ntfy.sh/devops-itla
